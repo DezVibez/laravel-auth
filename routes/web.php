@@ -19,4 +19,4 @@ Route::get('/', function () {
 //[ 'register'=> false ]
 Auth::routes();
 
-Route::get('/admin', 'Admin\HomeController@index')->middleware('auth')->prefix('admin')->name('admin.home');
+Route::get('/admin', 'Admin\HomeController@index')->middleware('auth')->name('admin.home');
