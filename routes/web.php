@@ -24,6 +24,7 @@ Route::middleware('auth')
 ->group(function () {
     Route::get('/', 'HomeController@Index')->name('home');
 
+    Route::resource('posts', 'PostController');
 
     Route::get('/{any}',function(){
         abort('404');
