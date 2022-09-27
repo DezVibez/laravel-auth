@@ -36,12 +36,7 @@
       <td scope="row"> <h3 class="text-center"> Nessun post </h3> </td>
     </tr>
     @endforelse
-    <tr>
-      <th scope="row">3</th>
-      <td>Larry</td>
-      <td>the Bird</td>
-      <td>@twitter</td>
-    </tr>
+    
   </tbody>
 </table>
 </main>
