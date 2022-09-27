@@ -13,17 +13,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any?}', function () {
-    return view('guest.home');
-});
 
 Auth::routes([ 'register'=> false ]);
 
 //Rotte protette
 Route::middleware('auth')
-    ->namespace('Admin')
-    ->name('admin.')
-    ->prefix('admin')
-    ->group(function () {
-        Route::get('/', 'HomeController@Index')->name('home');
-    });
+->namespace('Admin')
+->name('admin.')
+->prefix('admin')
+->group(function () {
+    Route::get('/', 'HomeController@Index')->name('home');
+
+
+    Route::get('/{any}',function(){
+        abort('404');
+    })->where('any', '.*');
+});
+
+//specifico che tutte le rotte non protette e quindi
+// quelle che non passano da admin saranno gestite in questo modo:
+Route::get('/{any?}', function () {
+    return view('guest.home');
+})->where('any', '.*');
