@@ -15,12 +15,12 @@
         <div class="form-group">
             <label for="title">Titolo</label>
             <input type="text" class="form-control"
-             id="title" required minlenght="5" maxlenght="50" value="{{ old('title') }}">
+             id="title" required minlenght="5" maxlenght="50" value="{{ old('title') }}" name="title">
         </div>
 
         <div class="form-group">
             <label for="content">Contenuto</label>
-            <textarea class="form-control" id="content">
+            <textarea class="form-control" id="content" name="content">
                 {{ old('content') }}
             </textarea>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             <label for="image">Immagine</label>
             <input type="url" class="form-control"
-             id="image" value="{{ old('image') }}">
+             id="image" value="{{ old('image') }}" name="image">
         </div>
 
         <hr>
