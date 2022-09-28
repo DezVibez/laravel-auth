@@ -14,7 +14,11 @@ class AddCategoryIdToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            //definisco colonna
+            $table->unsignedBigInteger('category_id')->nullable()->after('id');
+
+            //definisco foreign key
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('set null');
         });
     }
 
@@ -26,7 +30,11 @@ class AddCategoryIdToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            //
+            //elimina la relazione
+            $table->dropForeign('posts_category_id_foreign');
+
+            //elimina la colonna 
+            $table->dropColumn('category_id');
         });
     }
 }
