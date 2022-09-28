@@ -37,6 +37,16 @@
              id="image" value="{{ old('image', $post->image) }}" name="image">
         </div>
 
+        <div class="form-group">
+            <label for="category_id">Categoria</label>
+            <select name="category_id" id="category_id">
+                <option value="">Nessuna Categoria</option>
+                @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->label }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <hr>
     
         
