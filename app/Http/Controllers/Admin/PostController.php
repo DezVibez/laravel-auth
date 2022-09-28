@@ -6,6 +6,7 @@ use App\Models\Post;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -41,7 +42,7 @@ class PostController extends Controller
     {
         $request->validate(
             [
-            'title' => 'required|string|unique:posts',
+            'title' => 'required|string|unique:posts|min:5|max:50',
             'content' => 'required|string',
             'image' => 'nullable|url'
             ],
@@ -101,6 +102,23 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate(
+            [
+            'title' => ['required','string','unique','posts','min:5','max:50',Rule::unique('post')->ignore($post->id)],
+            'content' => 'required|string',
+            'image' => 'nullable|url'
+            ],
+
+            [
+                'title.required' => 'Il titolo è obbligatorio',
+                'content.required' => 'Il contenuto è obbligatorio',
+                'title.min'=> 'Il titolo deve avere almeno :min caratteri',
+                'title.max'=> 'Il titolo deve avere almeno :max caratteri',
+                'title.unique'=> "Esiste già un titolo chiamato $request->title",
+                'image.url'=> "URL dell'immagine non valido"
+            ]);
+
+
         $data = $request->all();
 
 
