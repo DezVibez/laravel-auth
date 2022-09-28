@@ -2,6 +2,7 @@
 
 @section('content')
 
+   
 <header>
     <h1>
         Post List
@@ -36,8 +37,18 @@
                 Vedi
             </i>
             </button>
-
         </a>
+
+        <form action="{{ route('admin.posts.destroy', $post->id ) }}" method="POST">
+            
+            @method('DELETE')
+            @csrf
+            <button class="btn btn-danger btn-sm mt-2" type="submit">
+                <i class="fa-solid fa-trash"></i> Elimina
+            </button>
+
+        </form>
+
       </td>
     </tr>
     @empty
