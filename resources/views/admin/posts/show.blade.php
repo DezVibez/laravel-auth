@@ -41,6 +41,14 @@
 
         </form>
 
+        <a href="{{ route('admin.posts.edit', $post) }}">
+            <button class="btn btn-warning">
+            <i class="fa-solid fa-pen">
+                Modifica
+            </i>
+            </button>
+        </a>
+
 
         <a class="btn btn-secondary" href=" {{ route('admin.posts.index') }}">
             <i class="fa-solid fa-rotate-left"></i> Indietro

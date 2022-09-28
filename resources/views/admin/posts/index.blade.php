@@ -48,6 +48,14 @@
             </button>
         </a>
 
+        <a href="{{ route('admin.posts.edit', $post) }}">
+            <button class="btn btn-sm btn-warning">
+            <i class="fa-solid fa-pen">
+                Modifica
+            </i>
+            </button>
+        </a>
+
         <form action="{{ route('admin.posts.destroy', $post->id ) }}" method="POST">
             
             @method('DELETE')
