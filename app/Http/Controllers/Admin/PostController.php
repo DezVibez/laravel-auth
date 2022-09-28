@@ -39,6 +39,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'require|string|unique:posts',
+            'content' => 'require|string',
+            'image' => 'nullable|url'],
+
+            [
+                'title.required' => 'Il titolo è obbligatorio',
+                'title.min'=> 'Il titolo deve avere almeno :min caratteri',
+                'title.max'=> 'Il titolo deve avere almeno :max caratteri',
+                'title.unique'=> "Esiste già un titolo chiamato $request->title",
+                'image.url'=> "URL dell'immagine non valido"
+            ]
+        );
         $data = $request->all();
 
         $post = new Post();
