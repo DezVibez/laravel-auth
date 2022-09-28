@@ -3,14 +3,23 @@
 @section('content')
 
    
-<header>
+<header class="d-flex justify-content-between container">
     <h1>
         Post List
     </h1>
 
+    <a href="{{ route('admin.posts.create') }}" >
+            
+        
+            <button class="btn btn-success btn-sm mt-2">
+                <i class="fa-solid fa-plus"></i> Crea Nuovo
+            </button>
+
+    </a>
+
 </header>
 
-<main>
+<main class="container">
 <table class="table table-striped table-dark">
   <thead>
     <tr>
@@ -48,6 +57,8 @@
             </button>
 
         </form>
+
+        
 
       </td>
     </tr>
