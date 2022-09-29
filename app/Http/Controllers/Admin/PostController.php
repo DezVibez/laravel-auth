@@ -65,7 +65,7 @@ class PostController extends Controller
         $post = new Post();
 
         $post->fill($data);
-        $post->slug = Str::slug( $request->title, '-');
+        $post->slug = Str::slug($post->title, '-');
         
         $post->save();
 
@@ -89,7 +89,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
@@ -109,7 +109,7 @@ class PostController extends Controller
     {
         $request->validate(
             [
-            'title' => ['required','string','posts','min:5','max:50',Rule::unique('post')->ignore($post->id)],
+            'title' => [ 'required','string','min:5','max:50', Rule::unique('posts')->ignore($post->id) ],
             'content' => 'required|string',
             'image' => 'nullable|url',
             'category_id' => 'nullable|exists:categories,id'
@@ -121,16 +121,16 @@ class PostController extends Controller
                 'title.min'=> 'Il titolo deve avere almeno :min caratteri',
                 'title.max'=> 'Il titolo deve avere almeno :max caratteri',
                 'title.unique'=> "Esiste già un titolo chiamato $request->title",
-                'image.url'=> "URL dell'immagine non valido"
+                'image.url'=> "url dell'immagine non valido"
             ]);
 
 
         $data = $request->all();
 
 
-        $data['slug'] = Str::slug($data['title'], '-');
+        $data['slug'] = Str::slug( $data['title'] , '-');
         
-        $post->update();
+        $post->update($data);
 
         return redirect()->route('admin.posts.show', $post)
             ->with('message', 'Post modificato con successo')
