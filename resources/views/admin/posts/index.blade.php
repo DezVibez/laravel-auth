@@ -25,6 +25,7 @@
     <tr>
       <th scope="col">#</th>
       <th scope="col">Titolo </th>
+      <th scope="col">Categoria</th>
       <th scope="col">Slug</th>
       <th scope="col">Creato il</th>
       <th scope="col">Modificato il</th>
@@ -36,22 +37,25 @@
     <tr>
       <th scope="row">{{ $post->id }}</th>
       <td>{{ $post->title }}</td>
+      <td> <span class="badge badge-pill badge-{{ $post->category['color'] ?? ''}}">{{ $post->category['label'] ?? ''}}</span> </td>
       <td>{{ $post->slug }}</td>
       <td>{{ $post->created_at }}</td>
       <td>{{ $post->updated_at }}</td>
       <td>
+
+      <div class="d-flex">
         <a href="{{ route('admin.posts.show', $post) }}">
             <button class="btn btn-sm btn-primary">
             <i class="fa-solid fa-magnifying-glass">
-                Vedi
+                
             </i>
             </button>
         </a>
 
         <a href="{{ route('admin.posts.edit', $post) }}">
-            <button class="btn btn-sm btn-warning">
+            <button class="btn btn-sm btn-warning mx-2">
             <i class="fa-solid fa-pen">
-                Modifica
+                
             </i>
             </button>
         </a>
@@ -60,12 +64,12 @@
             
             @method('DELETE')
             @csrf
-            <button class="btn btn-danger btn-sm mt-2" type="submit">
-                <i class="fa-solid fa-trash"></i> Elimina
+            <button class="btn btn-danger btn-sm " type="submit">
+                <i class="fa-solid fa-trash"></i>
             </button>
 
         </form>
-
+      </div>
         
 
       </td>
@@ -78,6 +82,14 @@
     
   </tbody>
 </table>
+
+<nav class="mt-3">
+  @if($posts->hasPages())
+    {{$posts->links()}}
+  @endif
+</nav>
+
 </main>
+
 
 @endsection
