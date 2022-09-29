@@ -22,6 +22,8 @@
             <strong>Creato il:</strong> <time>{{ $post->created_at }}</time>
             
             <strong>Modificato il:</strong> <time>{{ $post->updated_at }}</time>
+
+            <strong>Categoria:</strong> <time>{{ $post->category_id }}</time>
         </div>
     </div>
     

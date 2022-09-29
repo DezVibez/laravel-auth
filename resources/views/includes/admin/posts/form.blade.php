@@ -42,7 +42,7 @@
             <select name="category_id" id="category_id">
                 <option value="">Nessuna Categoria</option>
                 @foreach($categories as $category)
-                @if(old('category_id') === $category->id) selected @endif
+                @if(old('category_id', $post->category_id ) == $category->id) selected @endif
                 <option value="{{ $category->id }}">{{ $category->label }}</option>
                 @endforeach
             </select>

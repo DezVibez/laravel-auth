@@ -47,7 +47,8 @@ class PostController extends Controller
             [
             'title' => 'required|string|unique:posts|min:5|max:50',
             'content' => 'required|string',
-            'image' => 'nullable|url'
+            'image' => 'nullable|url',
+            'category_id' => 'nullable|exists:categories,id'
             ],
 
             [
@@ -94,7 +95,7 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', $categories));
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -108,9 +109,10 @@ class PostController extends Controller
     {
         $request->validate(
             [
-            'title' => ['required','string','unique','posts','min:5','max:50',Rule::unique('post')->ignore($post->id)],
+            'title' => ['required','string','posts','min:5','max:50',Rule::unique('post')->ignore($post->id)],
             'content' => 'required|string',
-            'image' => 'nullable|url'
+            'image' => 'nullable|url',
+            'category_id' => 'nullable|exists:categories,id'
             ],
 
             [
