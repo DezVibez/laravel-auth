@@ -49,7 +49,15 @@
         </div>
 
         <hr>
-    
+        @if(count($tags))
+            <h4>Tags</h4>
+            @foreach($tags as $tag)
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" >
+                <label class="form-check-label">{{ $tag->label }}</label>
+            </div>
+            @endforeach
+        @endif
         
         
         <hr>
