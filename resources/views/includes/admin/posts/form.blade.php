@@ -58,7 +58,7 @@
                     id=" tag-{{ $tag->label }}" 
                     name="tags[]" 
                     value="{{ $tag->id }}"
-                    @if( in_array( $tag->id, old('tags', []) )) checked @endif
+                    @if( in_array( $tag->id, old('tags', $prev_tags) )) checked @endif
                     > 
                 <label class="form-check-label" for=" tag-{{ $tag->label }}">{{ $tag->label }}</label>
             </div>

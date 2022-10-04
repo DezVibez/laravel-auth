@@ -35,7 +35,8 @@ class PostController extends Controller
         $post = new Post();
         $categories = Category::all();
         $tags = Tag::all();
-        return view('admin.posts.create', compact('post' , 'categories','tags'));
+        $prev_tags = [];
+        return view('admin.posts.create', compact('post' , 'categories','tags', 'prev_tags'));
     }
 
     /**
@@ -51,7 +52,8 @@ class PostController extends Controller
             'title' => 'required|string|unique:posts|min:5|max:50',
             'content' => 'required|string',
             'image' => 'nullable|url',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
             ],
 
             [
@@ -60,7 +62,8 @@ class PostController extends Controller
                 'title.min'=> 'Il titolo deve avere almeno :min caratteri',
                 'title.max'=> 'Il titolo deve avere almeno :max caratteri',
                 'title.unique'=> "Esiste già un titolo chiamato $request->title",
-                'image.url'=> "URL dell'immagine non valido"
+                'image.url'=> "URL dell'immagine non valido",
+                'tags.exists' => 'ID del tag non valido'
             ]);
 
         $data = $request->all();
@@ -71,6 +74,12 @@ class PostController extends Controller
         $post->slug = Str::slug($post->title, '-');
         
         $post->save();
+
+            if(array_key_exists('tags', $data)){
+                $post->tags()->attach($data['tags']);
+            }
+
+
 
         return redirect()->route('admin.posts.show', $post)
             ->with('message', 'Post creato con successo')
@@ -98,7 +107,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $prev_tags = $post->tags->pluck('id')->toArray();
+        return view('admin.posts.edit', compact('post', 'categories', 'prev_tags'));
     }
 
     /**
@@ -115,7 +125,8 @@ class PostController extends Controller
             'title' => [ 'required','string','min:5','max:50', Rule::unique('posts')->ignore($post->id) ],
             'content' => 'required|string',
             'image' => 'nullable|url',
-            'category_id' => 'nullable|exists:categories,id'
+            'category_id' => 'nullable|exists:categories,id',
+            'tags' => 'nullable|exists:tags,id'
             ],
 
             [
@@ -124,7 +135,8 @@ class PostController extends Controller
                 'title.min'=> 'Il titolo deve avere almeno :min caratteri',
                 'title.max'=> 'Il titolo deve avere almeno :max caratteri',
                 'title.unique'=> "Esiste già un titolo chiamato $request->title",
-                'image.url'=> "url dell'immagine non valido"
+                'image.url'=> "url dell'immagine non valido",
+                'tags.exists' => 'ID del tag non valido'
             ]);
 
 
@@ -134,6 +146,13 @@ class PostController extends Controller
         $data['slug'] = Str::slug( $data['title'] , '-');
         
         $post->update($data);
+
+        if(array_key_exists('tags', $data)){
+            
+            $post->tags()->sync($data['tags']);
+        }else {
+            $post->tags()->detach();    
+        }
 
         return redirect()->route('admin.posts.show', $post)
             ->with('message', 'Post modificato con successo')
